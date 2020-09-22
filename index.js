@@ -13,6 +13,7 @@ const { Client } = require('undici')
 async function run () {
   const server = await utils.createServer()
   const proxy = await utils.createProxy()
+  server.on('request', (req, res) => res.end('ok'))
 
   const client = new Client(`http://localhost:${proxy.address().port}`)
   const conn = await client.connect({ path: `localhost:${server.address().port}` })
